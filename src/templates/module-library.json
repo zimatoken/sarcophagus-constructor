@@ -1,0 +1,292 @@
+{
+  "version": "1.0",
+  "description": "Библиотека модулей для универсального Конструктора Саркофагов. Ядро знаний, извлечённое из проектов Максима (TAX SHIELD, Золотой Инвестор, Дикий Инвестор, Компас по Жизни, Экосистема «Я В НАТУРЕ», Педагог, Садовод, Айболит, Финансовая Система).",
+  "meta": {
+    "author": "Максим + Турбо ZX + Джин ЛИ",
+    "date": "2026-11-18",
+    "total_modules": 27,
+    "required_modules": ["M01", "M02", "M15"],
+    "conditional_required": {
+      "M06": ["A", "B", "D"]
+    }
+  },
+  "project_types": {
+    "A": "Активный продуктовый",
+    "B": "Экосистема / Семейство приложений",
+    "C": "Закрытый проект / Урок",
+    "D": "Сложное ядро + Compatibility Layer"
+  },
+  "modules": [
+    {
+      "id": "M01",
+      "name": "Философия и Принципы",
+      "type": ["A", "B", "C", "D"],
+      "required": true,
+      "fields": ["principles", "motto", "identity_anchor"],
+      "source": ["Все проекты"],
+      "description": "4–10 принципов, которые задают вектор проекта. Без них AI не поймёт, «что такое хорошо» в этом проекте.",
+      "example": "«Руль у пользователя», «Честность важнее приятности», «Говори на человеческом языке»"
+    },
+    {
+      "id": "M02",
+      "name": "Архитектура и Стек",
+      "type": ["A", "B", "C", "D"],
+      "required": true,
+      "fields": ["layers", "folders", "stack", "key_rule"],
+      "source": ["Все проекты"],
+      "description": "Слои, ключевые папки, стек технологий. Ключевое правило: core/ никогда не импортирует из components/ или screens/.",
+      "example": "src/core/ — ядро, src/components/ — UI, src/data/ — данные"
+    },
+    {
+      "id": "M03",
+      "name": "Git Baseline & Доказательства",
+      "type": ["D", "A"],
+      "required": false,
+      "fields": ["head_commit", "branch", "last_commits", "component_status_table"],
+      "source": ["TAX SHIELD", "Золотой Инвестор", "Дикий Инвестор", "Финансовая Система"],
+      "description": "Фиксация HEAD, ветки и последних коммитов. Таблица компонентов с доказательствами (коммит/ссылка). Гениальный блок для честности.",
+      "example": "Компонент | Статус | Доказательство (коммит)"
+    },
+    {
+      "id": "M04",
+      "name": "Матрица ролей (RBAC) и Безопасность",
+      "type": ["D", "A"],
+      "required": false,
+      "fields": ["role_table", "security_checks", "jwt", "rate_limit", "tenant_isolation"],
+      "source": ["TAX SHIELD"],
+      "description": "Таблица действий по ролям (Admin, Accountant, ...). Отдельный блок безопасности: JWT, Rate Limit, Tenant Isolation.",
+      "example": "Действие | Admin | Accountant | Viewer"
+    },
+    {
+      "id": "M05",
+      "name": "Стандарт модуля / API-контракт",
+      "type": ["B", "A"],
+      "required": false,
+      "fields": ["data_schema", "golden_rules", "load_order"],
+      "source": ["SOS", "Компас по Жизни", "Садовод", "Педагог", "Айболит"],
+      "description": "Жёсткая схема данных (как SOS_REGISTER_QUIZ или GARDEN_REGISTER_PLANT), которую нельзя нарушать. Золотые правила: ID vs TAGS, порядок загрузки скриптов.",
+      "example": "window.SOS_REGISTER_QUIZ({ meta, questions, solutions })"
+    },
+    {
+      "id": "M06",
+      "name": "База типовых багов и фиксов",
+      "type": ["A", "B", "D"],
+      "required": false,
+      "conditional_required_for": ["A", "B", "D"],
+      "fields": ["bug_table", "lessons_learned"],
+      "source": ["Все проекты"],
+      "description": "Таблица БАГ → Причина → Исправление. Для типа C трансформируется в «Извлечённые уроки». Прививка от повторения ошибок.",
+      "example": "UTF-8 BOM → Quirks Mode → писать HTML без BOM; SW кэш → менять имя кэша"
+    },
+    {
+      "id": "M07",
+      "name": "Open Questions (Нерешённое)",
+      "type": ["D", "A"],
+      "required": false,
+      "fields": ["open_questions"],
+      "source": ["TAX SHIELD", "Золотой Инвестор"],
+      "description": "Явный список того, что не решено, чтобы новый AI не тупил и не строил предположений.",
+      "example": "❓ Как обрабатывать мультивалютность? — не решено"
+    },
+    {
+      "id": "M08",
+      "name": "Чек-лист проверки (20+ пунктов)",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["checklist"],
+      "source": ["SOS", "Компас по Жизни", "Педагог", "Садовод"],
+      "description": "Конкретные пункты с галочками: валидация данных, психологическая грамотность, логическая полнота.",
+      "example": "✅ В conditions используются id из options, а НЕ tags"
+    },
+    {
+      "id": "M09",
+      "name": "Стандарты UI/UX и темы",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["css_variables", "theme", "responsive", "language_rules"],
+      "source": ["Золотой Инвестор", "Компас по Жизни", "Педагог", "Садовод", "Айболит"],
+      "description": "CSS-переменные, тёмная/светлая тема, адаптив 320–2560px. Правило «Говори на человеческом языке» (не full_sun, а «☀️ Полное солнце»).",
+      "example": "--bg: #0c1426; --text: #f1f5f9;"
+    },
+    {
+      "id": "M10",
+      "name": "Дорожная карта (PHASE/Волны)",
+      "type": ["A", "B", "C", "D"],
+      "required": false,
+      "fields": ["phases", "completed", "next_steps"],
+      "source": ["Все проекты"],
+      "description": "PHASE 1–N, что закрыто, что в плане. Для активного продукта без плана — смерть.",
+      "example": "PHASE 1 — Financial Truth ✅ / PHASE 2 — Market Engine ✅ / PHASE 3 — в плане"
+    },
+    {
+      "id": "M11",
+      "name": "Безопасный деплой (GitHub Pages)",
+      "type": ["A", "B", "D"],
+      "required": false,
+      "fields": ["deploy_algorithm", "forbidden_actions"],
+      "source": ["Золотой Инвестор", "Дикий Инвестор", "Компас по Жизни", "Финансовая Система"],
+      "description": "Алгоритм «Временная папка». Что НЕ делать: git rm -rf . в основной папке, .gitignore с PWA-файлами в gh-pages.",
+      "example": "mkdir .deploy-gh-pages → git init → git branch -M gh-pages → push --force"
+    },
+    {
+      "id": "M12",
+      "name": "Ключи localStorage / Данные",
+      "type": ["A", "B", "D"],
+      "required": false,
+      "fields": ["storage_keys", "export_import", "offline_first"],
+      "source": ["Золотой Инвестор", "Дикий Инвестор", "Компас", "Садовод", "Педагог", "Айболит"],
+      "description": "Список ключей, экспорт/импорт, offline-first. IndexedDB vs localStorage — что где используется.",
+      "example": "gi_policy_v1 — JSON InvestmentPolicy; compass_insights — инсайты"
+    },
+    {
+      "id": "M13",
+      "name": "Философия продукта (Девиз)",
+      "type": ["A", "B", "C"],
+      "required": false,
+      "fields": ["motto", "product_philosophy"],
+      "source": ["Золотой Инвестор", "Дикий Инвестор"],
+      "description": "Короткий девиз и философия продукта. «Приложение — штурман. Руль у тебя». «DI не получает рынок — DI принимает рынок».",
+      "example": "«Приложение — твой штурман. Но руль — у тебя.»"
+    },
+    {
+      "id": "M14",
+      "name": "Геймификация (XP, стрики, достижения)",
+      "type": ["B", "A"],
+      "required": false,
+      "fields": ["xp_formula", "levels", "streaks", "achievements", "tribes"],
+      "source": ["Экосистема «Я В НАТУРЕ»", "Садовод", "Педагог", "Айболит"],
+      "description": "Формула уровня (level = floor(xp/100)+1), начисление XP, стрики, достижения, 10 племён.",
+      "example": "XP: полив +5, посадка +15, сбор урожая +50. Уровни: Новичок → Ученик → ... → Маэстро"
+    },
+    {
+      "id": "M15",
+      "name": "Инструкция для AI при сбросе контекста",
+      "type": ["A", "B", "C", "D"],
+      "required": true,
+      "fields": ["ai_instruction", "workflow", "resume_rules"],
+      "source": ["Все проекты"],
+      "description": "Суть саркофага — передача контекста. «Скинь этот Саркофаг новому AI + скажи, где остановился».",
+      "example": "1. Скинь Саркофаг. 2. Скажи, где остановился. 3. Продолжаем с того же места."
+    },
+    {
+      "id": "M16",
+      "name": "Мостики между проектами (Deep Links)",
+      "type": ["B", "D"],
+      "required": false,
+      "fields": ["deep_links", "shared_storage", "inbox_key"],
+      "source": ["Дикий Инвестор ↔ Золотой Инвестор ↔ Компас ↔ Финансовая Система"],
+      "description": "Общий origin → общий localStorage. Deep links: from=kg&amount=...&ts=... Ключ di_inbox_v1 — входящие.",
+      "example": "from=zi&portfolio=...&ts=... / from=di&pnl=...&ts=..."
+    },
+    {
+      "id": "M17",
+      "name": "Follow-up и проверка исходов",
+      "type": ["A", "B", "C"],
+      "required": false,
+      "fields": ["follow_up_question", "follow_up_options", "reward", "check_period"],
+      "source": ["Компас по Жизни", "Золотой Инвестор"],
+      "description": "Через 7/30 дней спросить: «Сработало?» Сохраняет инсайт, планирует follow-up. Для типа C — критично.",
+      "example": "«Неделю назад ты решил преодолеть страх. Что из этого сделал?»"
+    },
+    {
+      "id": "M18",
+      "name": "Психологическая грамотность",
+      "type": ["A", "B", "C"],
+      "required": false,
+      "fields": ["no_moral_judgments", "two_minute_technique", "identity_framing"],
+      "source": ["Компас по Жизни"],
+      "description": "Нет моральных оценок, техника «2 минуты», identity framing («Ты — X», не «попробуй X»).",
+      "example": "«Ты — творец. Страх — не враг, а сигнал роста.»"
+    },
+    {
+      "id": "M19",
+      "name": "Геймификация как философия",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["xp_actions", "daily_quests", "routine_to_game"],
+      "source": ["Садовод", "Педагог", "Айболит"],
+      "description": "XP за действия, ежедневные квесты, превращение рутины в игру. Отличается от M14 тем, что здесь геймификация — основа UX, а не надстройка.",
+      "example": "💧 Полить 3 растения +30 XP; 🌾 Подкормить +40 XP"
+    },
+    {
+      "id": "M20",
+      "name": "Модуль SOS / Экстренная помощь",
+      "type": ["A", "B", "C"],
+      "required": false,
+      "fields": ["sos_scenarios", "step_by_step", "disclaimer"],
+      "source": ["Айболит", "Садовод", "Педагог"],
+      "description": "12 сценариев (укус, кровотечение, ожог...), пошаговые инструкции, «не заменяет врача».",
+      "example": "🐝 Укус → 🩸 Кровотечение → 🔥 Ожог → 💔 Боль в груди → ..."
+    },
+    {
+      "id": "M21",
+      "name": "Модуль «Пожилые» / «Дети»",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["elderly_tabs", "kids_tabs", "vaccination_calendar"],
+      "source": ["Айболит"],
+      "description": "5 вкладок для пожилых (препараты, болезни, опасные сочетания, профилактика, SOS). Календарь прививок для детей.",
+      "example": "💊 Препараты | 🩺 Болезни | ⚠️ Опасные сочетания | 🛡️ Профилактика | 🚨 SOS"
+    },
+    {
+      "id": "M22",
+      "name": "Финансовое ядро",
+      "type": ["D", "A"],
+      "required": false,
+      "fields": ["compound_interest", "monte_carlo", "health_score", "fire", "taxes", "iis"],
+      "source": ["Финансовая Система", "Золотой Инвестор", "Дикий Инвестор"],
+      "description": "Сложный процент с инфляцией, Монте-Карло (500 сценариев), Health Score, FIRE-таймер, налоги РФ 2026, ИИС-вычет.",
+      "example": "Health Score 0–100 по 4 параметрам: сбережения, долги, подушка, инвестиции"
+    },
+    {
+      "id": "M23",
+      "name": "P2P-обмен и мессенджер",
+      "type": ["B", "D"],
+      "required": false,
+      "fields": ["deals", "barter", "webrtc", "qr"],
+      "source": ["Финансовая Система"],
+      "description": "Сделки, бартер, WebRTC, QR. P2P-обмен без посредников.",
+      "example": "Воронка сделок → переговоры → бартер → QR-обмен"
+    },
+    {
+      "id": "M24",
+      "name": "Локализация (RU/EN)",
+      "type": ["B", "A"],
+      "required": false,
+      "fields": ["locales_file", "keys", "language_switch"],
+      "source": ["Финансовая Система", "Компас по Жизни", "Экосистема «Я В НАТУРЕ»"],
+      "description": "Централизованные locales.js, ключи cat_*, переключение языка. Все переводы в одном месте.",
+      "example": "core/locales.js — LOCALES + t(key, params)"
+    },
+    {
+      "id": "M25",
+      "name": "Стандарт данных для энциклопедий",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["entity_schema", "lifecycle", "sos_triggers", "companionship"],
+      "source": ["Садовод", "Педагог", "Айболит"],
+      "description": "Единая схема для 40 растений / 12 методик / 44 препаратов: meta, requirements, lifecycle, sos_triggers.",
+      "example": "window.GARDEN_REGISTER_PLANT({ meta, requirements, planting_window, lifecycle })"
+    },
+    {
+      "id": "M26",
+      "name": "Монетизация и продвижение",
+      "type": ["A", "B"],
+      "required": false,
+      "fields": ["telegram_channel", "boosty", "affiliate_links", "funnel", "conversion_metrics"],
+      "source": ["Золотой Инвестор"],
+      "description": "Telegram-канал (@golden_investor_zx), Boosty (донаты), партнёрские ссылки. Воронка: бесплатный контент → платный продукт. Метрики конверсии.",
+      "example": "Бесплатно навсегда — основная версия. Boosty — опционально."
+    },
+    {
+      "id": "M27",
+      "name": "Метрики и KPI",
+      "type": ["A", "B", "D"],
+      "required": false,
+      "fields": ["dau", "retention", "revenue", "user_xp", "target_metrics", "analytics_tools"],
+      "source": ["Золотой Инвестор", "Дикий Инвестор", "Финансовая Система"],
+      "description": "Как измеряем успех? DAU, retention, доход, XP пользователей. Целевые показатели. Инструменты аналитики (Яндекс.Метрика, самописные логи).",
+      "example": "DAU: 100 → цель 500; retention 7d: 40% → цель 60%"
+    }
+  ]
+}

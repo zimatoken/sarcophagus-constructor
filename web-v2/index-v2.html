@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Оффлайн-конструктор проектных саркофагов: фиксируй контекст, решения, риски и передавай проект между AI без потери управления.">
+    <meta name="theme-color" content="#0b1220">
+    <title>Конструктор Саркофагов v2.4.0</title>
+    <link rel="icon" type="image/png" href="../web/assets/favicon.png">
+    <link rel="apple-touch-icon" href="../web/assets/sarcophagus-logo.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="brand-title"><img class="app-logo" src="../web/assets/sarcophagus-logo.webp" alt="Логотип Конструктора Саркофагов"> <span>Конструктор Саркофагов <small>v2.4.0</small></span></h1>
+            <p class="subtitle">Система фиксации контекста и передачи проекта · Руль у тебя</p>
+            <div class="utility-bar">
+                <span id="saveStatus" role="status" aria-live="polite">Черновик хранится локально на этом устройстве</span>
+                <div class="utility-actions">
+                    <button id="btnExportJSON" class="btn btn-small btn-secondary" type="button">Экспорт JSON</button>
+                    <button id="btnImportJSON" class="btn btn-small btn-secondary" type="button">Импорт JSON</button>
+                    <input id="importJSONFile" type="file" accept="application/json,.json" hidden>
+                </div>
+            </div>
+            
+            <!-- Переключатель режимов -->
+            <div class="mode-switcher">
+                <button id="modeNormal" class="mode-btn active" type="button" aria-pressed="true">🔧 Обычный режим</button>
+                <button id="modeDiagnost" class="mode-btn" type="button" aria-pressed="false">🚨 Диагност</button>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p class="stage-indicator" id="stageIndicator">Этап 0 / 4</p>
+        </header>
+
+        <!-- РЕЖИМ ДИАГНОСТА -->
+        <section id="diagnostMode" style="display:none;">
+            <h2>🚨 Что случилось?</h2>
+            <p class="hint">Опиши проблему или ситуацию. Локальный диагностический алгоритм подберёт предварительные рекомендации по ключевым словам — это не AI и не экспертное заключение. Проверь предложения перед применением.</p>
+            <textarea id="diagnostInput" rows="6" placeholder="Например: 'Пользователи скачивают игру, но бросают через 5 минут' или 'Хочу сделать сайт, но не знаю с чего начать'"></textarea>
+            <button id="btnDiagnostAnalyze" class="btn btn-success" style="width:100%; margin-top:16px;">🔍 Анализировать и заполнить</button>
+            
+            <div id="diagnostResult" style="margin-top:24px; display:none;">
+                <h3>💡 Предварительная рекомендация алгоритма:</h3>
+                <pre id="diagnostOutput"></pre>
+                <button id="btnApplyDiagnost" class="btn btn-primary" style="margin-top:16px;">✅ Применить и продолжить</button>
+            </div>
+        </section>
+
+        <!-- ОБЫЧНЫЙ РЕЖИМ -->
+        <main id="wizard">
+            <!-- Контент этапов рендерится динамически -->
+        </main>
+
+        <footer class="controls">
+            <button id="btnBack" class="btn btn-secondary" disabled>← Назад</button>
+            <button id="btnNext" class="btn btn-primary">Далее →</button>
+            <button id="btnGenerate" class="btn btn-success" style="display:none;">🎯 Сгенерировать</button>
+        </footer>
+
+        <section id="result" style="display:none;">
+            <h2>📦 SHORT CAPSULE</h2>
+            <pre id="shortCapsule"></pre>
+            <h2>📜 FULL SARCOPHAGUS</h2>
+            <pre id="fullSarcophagus"></pre>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+                <button id="btnCopyShort" class="btn btn-secondary" type="button">Копировать SHORT</button>
+                <button id="btnDownloadShort" class="btn btn-primary" type="button">💾 Скачать SHORT</button>
+                <button id="btnCopyFull" class="btn btn-secondary" type="button">Копировать FULL</button>
+                <button id="btnDownloadFull" class="btn btn-success" type="button">📜 Скачать FULL</button>
+                <button id="btnExportJSONResult" class="btn btn-secondary" type="button">Экспорт проекта JSON</button>
+                <button id="btnRestart" class="btn btn-secondary">🔄 Новый саркофаг</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="library-v2.js"></script>
+    <script src="constructor-v2.js"></script>
+</body>
+</html>

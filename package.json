@@ -1,0 +1,20 @@
+{
+  "name": "sarcophagus-constructor",
+  "version": "2.4.0",
+  "description": "Offline-first constructor for durable AI project handoff documents",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [
+    "sarcophagus",
+    "knowledge-management",
+    "ai-context",
+    "project-documentation"
+  ],
+  "author": "Максим",
+  "license": "MIT"
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Конструктор Саркофагов v1.4</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Конструктор Саркофагов</h1>
+            <p class="subtitle">Версия 1.4 · Руль у тебя</p>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p class="stage-indicator" id="stageIndicator">Этап 0 / 4</p>
+        </header>
+
+        <main id="wizard">
+            <!-- Контент этапов рендерится динамически через constructor.js -->
+        </main>
+
+        <footer class="controls">
+            <button id="btnBack" class="btn btn-secondary" disabled>← Назад</button>
+            <button id="btnNext" class="btn btn-primary">Далее →</button>
+            <button id="btnGenerate" class="btn btn-success" style="display:none;">🎯 Сгенерировать</button>
+        </footer>
+
+        <!-- Блок результата с раздельным экспортом (v1.4) -->
+        <section id="result" style="display:none;">
+            <h2>📦 SHORT CAPSULE</h2>
+            <pre id="shortCapsule"></pre>
+            
+            <h2>📜 FULL SARCOPHAGUS</h2>
+            <pre id="fullSarcophagus"></pre>
+            
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+                <button id="btnDownloadShort" class="btn btn-primary">💾 Скачать SHORT</button>
+                <button id="btnDownloadFull" class="btn btn-success">📜 Скачать FULL</button>
+                <button id="btnRestart" class="btn btn-secondary">🔄 Новый саркофаг</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ВАЖНО: Библиотека модулей должна загружаться ПЕРЕД логикой конструктора -->
+    <script src="library.js"></script>
+    <script src="constructor.js"></script>
+</body>
+</html>
