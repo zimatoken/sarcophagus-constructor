@@ -5,7 +5,7 @@ A focused hardening release based on v2.3.0. Existing project flow and module li
 
 ## Changes
 - Strict JSON import validation before replacing the active draft.
-- Imported project data is normalized against known fields and the 27-module allowlist.
+- Imported project data is normalized against known fields and the 30-module allowlist.
 - Text values are bounded to avoid oversized or malformed imported payloads.
 - Help dialog now has dialog semantics, focus management, keyboard containment, and complete event-listener cleanup.
 - Diagnostic mode is accurately described as a local keyword heuristic; it does not call an AI model.
@@ -15,7 +15,7 @@ A focused hardening release based on v2.3.0. Existing project flow and module li
 ## Verification
 - `npm test`: 17 tests passing.
 - `npm run check`: passing.
-- 27 unique modules validated.
+- 30 unique modules validated.
 - Browser manual E2E is still required on the target Windows/Chrome environment before declaring release acceptance.
 
 ## Compatibility

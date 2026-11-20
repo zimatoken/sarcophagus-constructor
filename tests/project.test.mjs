@@ -14,7 +14,7 @@ test('module library has unique IDs and all four project types', () => {
   const context = {};
   vm.runInNewContext(read('web/library.js') + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
   const modules = context.lib.modules;
-  assert.equal(modules.length,27);
+  assert.equal(modules.length,30);
   assert.equal(new Set(modules.map(m=>m.id)).size,modules.length);
   for (const type of ['A','B','C','D']) assert.ok(modules.some(m=>m.type.includes(type)),`type ${type}`);
 });
@@ -24,8 +24,8 @@ test('v2 page loads the actual module library before constructor runtime', () =>
   assert.ok(html.indexOf('library-v2.js') < html.indexOf('constructor-v2.js'), 'library must load before runtime');
   const context = {};
   vm.runInNewContext(library + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
-  assert.equal(context.lib.modules.length, 27);
-  assert.equal(new Set(context.lib.modules.map(m => m.id)).size, 27);
+  assert.equal(context.lib.modules.length, 30);
+  assert.equal(new Set(context.lib.modules.map(m => m.id)).size, 30);
 });
 test('v2 diagnostic aliases map to existing module IDs', () => {
   const js = read('docs-app/constructor-v2.js');
@@ -93,12 +93,12 @@ test('v2 provides expanded cheat-sheets for every fixed input and optional decis
   assert.match(html,/diagnostInput/);
 });
 
-test('v2 module cheat-sheets are generated from the full 27-module library', () => {
+test('v2 module cheat-sheets are generated from the full 30-module library', () => {
   const js = read('docs-app/constructor-v2.js');
   const library = read('docs-app/library-v2.js');
   const context = {};
   vm.runInNewContext(library + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
-  assert.equal(context.lib.modules.length, 27);
+  assert.equal(context.lib.modules.length, 30);
   assert.match(js,/renderGuide\(module\.id, module\)/);
   assert.match(js,/module\.description/);
   assert.match(js,/module\.example \|\| module\.template/);
@@ -109,7 +109,7 @@ test('v2 import validator accepts supported project envelopes and rejects foreig
   const start = js.indexOf('function normalizeProjectData(source) {');
   const end = js.indexOf('\nfunction saveDraft()', start);
   assert.ok(start >= 0 && end > start);
-  const context = { MODULE_LIBRARY: { modules: Array.from({ length: 27 }, (_, i) => ({ id: `M${String(i + 1).padStart(2, '0')}` })) } };
+  const context = { MODULE_LIBRARY: { modules: Array.from({ length: 30 }, (_, i) => ({ id: `M${String(i + 1).padStart(2, '0')}` })) } };
   vm.runInNewContext(js.slice(start, end) + '\nglobalThis.api={normalizeProjectData,validateImportedProject};', context);
   assert.equal(context.api.validateImportedProject({ app: 'Sarcophagus Constructor', schemaVersion: 2, data: { type: 'A', name: 'QA' } }).name, 'QA');
   assert.throws(() => context.api.validateImportedProject({ app: 'foreign', schemaVersion: 2, data: {} }), /другим приложением/);
@@ -182,7 +182,7 @@ test('v2 complex draft envelope restores stage, all module values and optional b
   const values = new Map();
   const context = {
     DRAFT_KEY: 'sarcophagus_draft_v2',
-    MODULE_LIBRARY: { modules: Array.from({ length: 27 }, (_, i) => ({ id: `M${String(i + 1).padStart(2, '0')}` })) },
+    MODULE_LIBRARY: { modules: Array.from({ length: 30 }, (_, i) => ({ id: `M${String(i + 1).padStart(2, '0')}` })) },
     state: { currentStage: 4, data: {} },
     localStorage: { setItem: (k,v) => values.set(k,v), getItem: k => values.get(k) ?? null },
     document: { getElementById: () => ({ textContent: '' }) },
@@ -191,21 +191,21 @@ test('v2 complex draft envelope restores stage, all module values and optional b
     console
   };
   vm.runInNewContext(js.slice(start, end) + '\nglobalThis.persistence={saveDraft,loadDraft};', context);
-  context.state.data = { type: 'D', name: 'Complex QA', typeSpecific: Object.fromEntries(Array.from({length:27},(_,i)=>[`input_M${String(i+1).padStart(2,'0')}`,`module-${i+1}`])), optional: { risks: 'yes', links: 'no' }, optionalText: { risks: 'Risk log' } };
+  context.state.data = { type: 'D', name: 'Complex QA', typeSpecific: Object.fromEntries(Array.from({length:30},(_,i)=>[`input_M${String(i+1).padStart(2,'0')}`,`module-${i+1}`])), optional: { risks: 'yes', links: 'no' }, optionalText: { risks: 'Risk log' } };
   context.persistence.saveDraft();
   context.state = { currentStage: 0, data: {} };
   assert.equal(context.persistence.loadDraft(), true);
   assert.equal(context.state.currentStage, 4);
   assert.equal(context.state.data.type, 'D');
-  assert.equal(context.state.data.typeSpecific.input_M27, 'module-27');
+  assert.equal(context.state.data.typeSpecific.input_M30, 'module-30');
   assert.equal(context.state.data.optional.risks, 'yes');
   assert.equal(context.state.data.optionalText.risks, 'Risk log');
 });
 
-test('v2 module library exposes usable descriptions and field examples for all 27 modules', () => {
+test('v2 module library exposes usable descriptions and field examples for all 30 modules', () => {
   const context = {};
   vm.runInNewContext(read('docs-app/library-v2.js') + '\nglobalThis.lib=MODULE_LIBRARY;', context);
-  assert.equal(context.lib.modules.length, 27);
+  assert.equal(context.lib.modules.length, 30);
   for (const module of context.lib.modules) {
     assert.ok(module.id && module.name, `module identity ${module.id}`);
     assert.ok(Array.isArray(module.type) && module.type.length > 0, `${module.id} project types`);

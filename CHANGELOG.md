@@ -26,7 +26,7 @@
 
 ## 2.3.0 — Guided Edition
 - Добавлены большие постоянно видимые шпаргалки ко всем фиксированным полям мастера.
-- Для всех 27 модулей шпаргалки формируются из фактического описания и примера/шаблона библиотеки.
+- Для всех 30 модулей шпаргалки формируются из фактического описания и примера/шаблона библиотеки.
 - Каждая шпаргалка объясняет, что вводить, зачем это нужно, что произойдёт дальше, что требуется от пользователя и приводит пример ориентира.
 - Расширено содержимое модального окна `?` практическими инструкциями.
 - Добавлено отдельное руководство пользователя `docs/USER_GUIDE_v1.0.md`.
@@ -40,5 +40,5 @@
 - Improved help dialog accessibility: semantic dialog attributes, focus placement/restoration, Tab focus containment, Escape/backdrop/close cleanup, and listener removal.
 - Clarified that Diagnostic mode is a local keyword heuristic, not an AI service or expert assessment.
 - Added keyboard focus styling and narrow-screen layout refinements.
-- Added regression tests for import validation, normalization, complex draft restore, FULL output filtering, help-dialog lifecycle, and all 27 module definitions.
+- Added regression tests for import validation, normalization, complex draft restore, FULL output filtering, help-dialog lifecycle, and all 30 module definitions.
 - Preserved the existing v2.3.0 wizard, module library, project flow, and generation model; no dependencies or backend added.
