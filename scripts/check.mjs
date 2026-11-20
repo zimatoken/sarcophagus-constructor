@@ -1,9 +1,9 @@
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+﻿import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 const root = fileURLToPath(new URL('../', import.meta.url));
-const jsFiles = ['web/constructor.js','web/library.js','web-v2/constructor-v2.js','web-v2/library-v2.js'];
+const jsFiles = ['web/constructor.js','web/library.js','docs-app/constructor-v2.js','docs-app/library-v2.js'];
 for (const file of jsFiles) {
   const source = readFileSync(join(root,file),'utf8');
   if (file.endsWith('.js') && file.includes('constructor')) new vm.Script(source,{filename:file});
@@ -15,10 +15,10 @@ for (const module of sandbox.__library.modules) {
   if (!module.id || ids.has(module.id)) throw new Error(`Duplicate/empty module ID: ${module.id}`);
   ids.add(module.id);
 }
-for (const file of ['web-v2/index-v2.html','web-v2/constructor-v2.js','web-v2/library-v2.js','web-v2/styles.css']) {
+for (const file of ['docs-app/index-v2.html','docs-app/constructor-v2.js','docs-app/library-v2.js','docs-app/styles.css']) {
   if (!existsSync(join(root,file))) throw new Error(`Missing runtime file: ${file}`);
 }
-const v2Source = readFileSync(join(root,'web-v2/constructor-v2.js'),'utf8');
+const v2Source = readFileSync(join(root,'docs-app/constructor-v2.js'),'utf8');
 if (!v2Source.includes('../web/assets/icons/')) throw new Error('v2 must reference shared icon assets');
 for (const file of readdirSync(join(root,'web/assets/icons'))) {
   if (!existsSync(join(root,'web/assets/icons',file))) throw new Error(`Missing shared icon: ${file}`);

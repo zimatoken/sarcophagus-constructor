@@ -1,4 +1,4 @@
-import test from 'node:test';
+﻿import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,7 +8,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const read = p => readFileSync(join(root,p),'utf8');
 
 test('both constructor scripts are valid JavaScript', () => {
-  for (const p of ['web/constructor.js','web-v2/constructor-v2.js']) assert.doesNotThrow(() => new vm.Script(read(p)),p);
+  for (const p of ['web/constructor.js','docs-app/constructor-v2.js']) assert.doesNotThrow(() => new vm.Script(read(p)),p);
 });
 test('module library has unique IDs and all four project types', () => {
   const context = {};
@@ -19,8 +19,8 @@ test('module library has unique IDs and all four project types', () => {
   for (const type of ['A','B','C','D']) assert.ok(modules.some(m=>m.type.includes(type)),`type ${type}`);
 });
 test('v2 page loads the actual module library before constructor runtime', () => {
-  const html = read('web-v2/index-v2.html');
-  const library = read('web-v2/library-v2.js');
+  const html = read('docs-app/index.html');
+  const library = read('docs-app/library-v2.js');
   assert.ok(html.indexOf('library-v2.js') < html.indexOf('constructor-v2.js'), 'library must load before runtime');
   const context = {};
   vm.runInNewContext(library + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
@@ -28,7 +28,7 @@ test('v2 page loads the actual module library before constructor runtime', () =>
   assert.equal(new Set(context.lib.modules.map(m => m.id)).size, 27);
 });
 test('v2 diagnostic aliases map to existing module IDs', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const ids = [...js.matchAll(/(?:foundation|compass|playground|treasure|first_aid|translator|sos): '(M\d+)'/g)].map(m=>m[1]);
   const context = {};
   vm.runInNewContext(read('web/library.js') + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
@@ -37,20 +37,24 @@ test('v2 diagnostic aliases map to existing module IDs', () => {
   for (const id of ids) assert.ok(known.has(id),`unknown diagnostic module ${id}`);
 });
 test('v2 runtime has import/export controls and local draft persistence', () => {
-  const html=read('web-v2/index-v2.html'), js=read('web-v2/constructor-v2.js');
+  const html=read('docs-app/index.html'), js=read('docs-app/constructor-v2.js');
   for (const id of ['btnExportJSON','btnImportJSON','importJSONFile','btnCopyShort','btnCopyFull']) assert.ok(html.includes(id),id);
   assert.match(js,/schemaVersion:\s*2/);
   assert.match(js,/normalizeProjectData/);
 });
 test('legacy and v2 icon libraries are complete', () => {
   for (const file of ['foundation.png','compass.png','first-aid.png','treasure.png','playground.png','emergency.png','ai-memo.png']) {
-    assert.ok(existsSync(join(root,'web/assets/icons',file)),file);
-    assert.ok(read('web-v2/constructor-v2.js').includes('../web/assets/icons/'), 'v2 uses shared icon directory');
+    const hasLegacy = existsSync(join(root,'web/assets/icons',file));
+    const hasNew = existsSync(join(root,'docs-app/assets/icons',file));
+    assert.ok(hasLegacy || hasNew, `missing icon ${file}`);
   }
+  // Проверяем, что в constructor-v2.js используется локальная папка иконок
+  const js = read('docs-app/constructor-v2.js');
+  assert.ok(js.includes('assets/icons/'), 'v2 uses local icon directory');
 });
 
 test('v2 restores original contextual help for all key wizard fields', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   for (const id of ['type','name','version','date','status','philosophy','purpose','architecture',
     'M01','M03','M04','M06','M07','M08','M10','M15','M20','M26','M27',
     'opt-currentStatus','opt-checklists','opt-risks','opt-changelog','opt-links','aiMemo','criticalNotes']) {
@@ -60,21 +64,23 @@ test('v2 restores original contextual help for all key wizard fields', () => {
   assert.match(js,/helpBtn\.dataset\.help/);
 });
 test('v2 branding assets and mode controls are styled', () => {
-  const html = read('web-v2/index-v2.html');
-  const css = read('web-v2/styles.css');
+  const html = read('docs-app/index.html');
+  const css = read('docs-app/styles.css');
   assert.ok(html.includes('sarcophagus-logo.webp'));
   assert.ok(html.includes('favicon.png'));
   assert.match(css,/\.mode-btn\.active/);
   assert.match(css,/\.help-btn/);
   assert.match(read('scripts/serve.mjs'),/\.webp':'image\/webp'/);
   for (const f of ['sarcophagus-logo.webp','sarcophagus-logo.png','favicon.png']) {
-    assert.ok(existsSync(join(root,'web/assets',f)), `missing brand asset ${f}`);
+    const hasLegacy = existsSync(join(root,'web/assets',f));
+    const hasNew = existsSync(join(root,'docs-app/assets',f));
+    assert.ok(hasLegacy || hasNew, `missing brand asset ${f}`);
   }
 });
 
 test('v2 provides expanded cheat-sheets for every fixed input and optional decision', () => {
-  const js = read('web-v2/constructor-v2.js');
-  const html = read('web-v2/index-v2.html');
+  const js = read('docs-app/constructor-v2.js');
+  const html = read('docs-app/index.html');
   for (const id of ['type','name','version','date','status','philosophy','purpose','architecture',
     'opt-currentStatus','opt-checklists','opt-risks','opt-changelog','opt-links','aiMemo','criticalNotes','diagnostInput']) {
     assert.ok(js.includes(`${id}:`) || js.includes(`'${id}':`), `missing field guide ${id}`);
@@ -88,8 +94,8 @@ test('v2 provides expanded cheat-sheets for every fixed input and optional decis
 });
 
 test('v2 module cheat-sheets are generated from the full 27-module library', () => {
-  const js = read('web-v2/constructor-v2.js');
-  const library = read('web-v2/library-v2.js');
+  const js = read('docs-app/constructor-v2.js');
+  const library = read('docs-app/library-v2.js');
   const context = {};
   vm.runInNewContext(library + String.fromCharCode(10) + 'globalThis.lib=MODULE_LIBRARY;', context);
   assert.equal(context.lib.modules.length, 27);
@@ -99,7 +105,7 @@ test('v2 module cheat-sheets are generated from the full 27-module library', () 
 });
 
 test('v2 import validator accepts supported project envelopes and rejects foreign or unsupported files', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const start = js.indexOf('function normalizeProjectData(source) {');
   const end = js.indexOf('\nfunction saveDraft()', start);
   assert.ok(start >= 0 && end > start);
@@ -113,7 +119,7 @@ test('v2 import validator accepts supported project envelopes and rejects foreig
 });
 
 test('v2 import normalization whitelists known module keys and bounds text fields', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const start = js.indexOf('function normalizeProjectData(source) {');
   const end = js.indexOf('\nfunction saveDraft()', start);
   const context = { MODULE_LIBRARY: { modules: [{ id: 'M01' }, { id: 'M02' }] } };
@@ -128,7 +134,7 @@ test('v2 import normalization whitelists known module keys and bounds text field
 });
 
 test('v2 FULL generation includes selected modules and enabled optional sections without leaking disabled modules', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const start = js.indexOf('function generateMarkdown() {');
   const end = js.indexOf('\n// Навигация', start);
   assert.ok(start >= 0 && end > start);
@@ -149,7 +155,7 @@ test('v2 FULL generation includes selected modules and enabled optional sections
 });
 
 test('help dialog cleans up Escape listener and provides accessible modal semantics', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const start = js.indexOf('function showHelp(helpId) {');
   const end = js.indexOf('\nfunction attachModuleCheckboxes()', start);
   const fn = js.slice(start, end);
@@ -161,15 +167,15 @@ test('help dialog cleans up Escape listener and provides accessible modal semant
 });
 
 test('diagnostic mode accurately identifies itself as a local keyword heuristic, not AI', () => {
-  const js = read('web-v2/constructor-v2.js');
-  const html = read('web-v2/index-v2.html');
+  const js = read('docs-app/constructor-v2.js');
+  const html = read('docs-app/index.html');
   assert.match(html, /локальный диагностический алгоритм/i);
   assert.match(js, /внешняя AI-модель не вызывается/i);
   assert.doesNotMatch(html, /AI сам предложит решение/i);
 });
 
 test('v2 complex draft envelope restores stage, all module values and optional blocks', () => {
-  const js = read('web-v2/constructor-v2.js');
+  const js = read('docs-app/constructor-v2.js');
   const start = js.indexOf('function normalizeProjectData(source) {');
   const end = js.indexOf('\nfunction renderStage(stage)', start);
   assert.ok(start >= 0 && end > start);
@@ -198,7 +204,7 @@ test('v2 complex draft envelope restores stage, all module values and optional b
 
 test('v2 module library exposes usable descriptions and field examples for all 27 modules', () => {
   const context = {};
-  vm.runInNewContext(read('web-v2/library-v2.js') + '\nglobalThis.lib=MODULE_LIBRARY;', context);
+  vm.runInNewContext(read('docs-app/library-v2.js') + '\nglobalThis.lib=MODULE_LIBRARY;', context);
   assert.equal(context.lib.modules.length, 27);
   for (const module of context.lib.modules) {
     assert.ok(module.id && module.name, `module identity ${module.id}`);

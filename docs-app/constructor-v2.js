@@ -648,7 +648,7 @@ function renderModuleBlock(module, isRequired) {
         : '<span class="module-badge optional">Опциональный</span>';
 
     const iconById = { M01: 'foundation.png', M02: 'foundation.png', M03: 'compass.png', M04: 'emergency.png', M06: 'first-aid.png', M08: 'compass.png', M10: 'compass.png', M14: 'playground.png', M15: 'ai-memo.png', M20: 'emergency.png', M22: 'treasure.png', M26: 'treasure.png' };
-    const iconPath = module.icon || `../web/assets/icons/${iconById[module.id] || 'ai-memo.png'}`;
+    const iconPath = module.icon || `assets/icons/${iconById[module.id] || 'ai-memo.png'}`;
 
     return `
         <div class="module-card" data-module="${module.id}" 
