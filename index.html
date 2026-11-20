@@ -1,14 +1,137 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1220"><title>Конструктор Саркофагов v2.2</title><link rel="icon" type="image/png" href="web/assets/favicon.png">
-<style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#1e3a5f,#0b1220 58%);color:#e5edf8;font:16px/1.6 system-ui,sans-serif}
-main{max-width:760px;width:100%;padding:36px;border:1px solid #334155;border-radius:22px;background:#111c2d;box-shadow:0 24px 80px #0008}
-h1{margin:0 0 8px;color:#67e8f9}p{color:#a8b7cc}.links{display:grid;gap:14px;margin-top:28px}
-a{display:block;padding:18px 20px;border-radius:12px;text-decoration:none;color:#eaf5ff;background:#1d3553;border:1px solid #3b5b7d}
-a:hover{border-color:#22d3ee;background:#234366}small{display:block;color:#9fb2c9;margin-top:5px}
-</style></head><body><main><h1><img src="web/assets/sarcophagus-logo.webp" alt="" style="width:52px;height:52px;vertical-align:middle;border-radius:12px;margin-right:10px">Конструктор Саркофагов</h1>
-<p>Оффлайн-инструмент для фиксации контекста проекта, решений, рисков и передачи работы между AI. Руль у пользователя.</p>
-<div class="links"><a href="web-v2/index-v2.html">🚀 Открыть усиленную версию v2.2<small>Рекомендуемая версия: Диагност, контекстные подсказки, единый стиль, фирменный логотип, автосохранение и импорт/экспорт JSON.</small></a>
-<a href="web/index.html">🧰 Открыть классическую версию v1.4<small>Исходная версия сохранена без переписывания — для совместимости и сравнения.</small></a></div>
-</main></body></html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1220">
+    <title>🛡️ Конструктор Саркофагов</title>
+    <link rel="icon" type="image/png" href="docs-app/assets/favicon.png">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: radial-gradient(circle at 50% 0, #1e3a5f, #0b1220 58%);
+            color: #e5edf8;
+            font: 16px/1.7 system-ui, sans-serif;
+        }
+        main {
+            max-width: 780px;
+            width: 100%;
+            padding: 44px;
+            border: 1px solid #334155;
+            border-radius: 22px;
+            background: #111c2d;
+            box-shadow: 0 24px 80px #0008;
+        }
+        h1 {
+            margin: 0 0 16px;
+            color: #67e8f9;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: contain;
+            background: #0b1220;
+            padding: 6px;
+            border: 1px solid #334155;
+        }
+        h2 {
+            margin: 28px 0 12px;
+            color: #a5f3fc;
+            font-size: 20px;
+        }
+        p {
+            color: #a8b7cc;
+            margin: 0 0 14px;
+        }
+        ul {
+            color: #cbd5e1;
+            padding-left: 22px;
+            margin: 0 0 18px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .cta {
+            display: block;
+            margin-top: 32px;
+            padding: 20px 24px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #eaf5ff;
+            background: linear-gradient(135deg, #1d4ed8, #0e7490);
+            border: 1px solid #22d3ee;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 8px 24px rgba(34, 211, 238, 0.2);
+        }
+        .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(34, 211, 238, 0.35);
+        }
+        .cta small {
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            color: #bae6fd;
+            margin-top: 6px;
+        }
+        .footer {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            font-size: 14px;
+            color: #64748b;
+            text-align: center;
+        }
+        .footer strong {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>
+            <img class="logo" src="docs-app/assets/sarcophagus-logo.webp" alt="Логотип">
+            <span>Конструктор Саркофагов</span>
+        </h1>
+        
+        <p>Оффлайн-инструмент для фиксации контекста проекта, решений, рисков и передачи работы между AI. <strong>Руль у пользователя.</strong></p>
+        
+        <h2>🎯 Что это такое?</h2>
+        <p>«Саркофаг» — это структурированный документ, который собирает воедино всё, что нужно знать о проекте: философию, архитектуру, правила, баги, планы. Когда ты передаёшь проект новому AI или возвращаешься к нему через месяц — ты просто скидываешь Саркофаг, и контекст восстанавливается за 30 секунд.</p>
+        
+        <h2>🧠 Зачем это нужно?</h2>
+        <ul>
+            <li><strong>Без хаоса:</strong> новый AI сразу понимает, «что такое хорошо» в твоём проекте.</li>
+            <li><strong>Без потерь:</strong> все решения, баги и договорённости зафиксированы.</li>
+            <li><strong>Без повторения ошибок:</strong> база багов и фиксов — это прививка от грабель.</li>
+            <li><strong>Скорость:</strong> 30 секунд на передачу контекста вместо часа объяснений.</li>
+        </ul>
+        
+        <h2>🚀 Как начать?</h2>
+        <p>Нажми на кнопку ниже. Конструктор проведёт тебя через 5 этапов (тип проекта → ядро → модули → опции → генерация). На выходе получишь два артефакта: <strong>SHORT CAPSULE</strong> (краткая суть для быстрой передачи) и <strong>FULL SARCOPHAGUS</strong> (полный документ для архива).</p>
+        
+        <a class="cta" href="docs-app/index.html">
+            🛡️ Открыть Конструктор Саркофагов
+            <small>Версия v2.4.0 · Диагност · Автосохранение · Импорт/экспорт JSON</small>
+        </a>
+        
+        <div class="footer">
+            <strong>Турбо ZX + Максим</strong> = «Конструктор Саркофагов» 🚀<br>
+            <span style="font-size:12px;">«Приложение — твой штурман. Но руль — у тебя.»</span>
+        </div>
+    </main>
+</body>
+</html>
