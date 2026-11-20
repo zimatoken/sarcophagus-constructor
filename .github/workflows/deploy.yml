@@ -2,8 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [master]
-  workflow_dispatch:
+    branches:
+      - main
+      - master   # ← КЛЮЧЕВОЕ: GitHub сам определит, какая ветка главная
+  workflow_dispatch:   # ← Позволяет запускать вручную из вкладки Actions
 
 permissions:
   contents: read
@@ -11,28 +13,34 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs-app
+          path: '.'
 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
