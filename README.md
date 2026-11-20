@@ -101,3 +101,10 @@ npm run check
 The current hardened release validates imported JSON before replacing the draft, normalizes imported values against the known schema and module IDs, improves help-dialog keyboard accessibility, and labels Diagnostic mode honestly as a local keyword heuristic. See `docs/RELEASE_NOTES_v2.4.0.md` and `docs/PRODUCTION_HARDENING_REPORT_v2.4.0.md`.
 
 **Data safety note:** drafts are stored in this browser profile using `localStorage`; they are not synced to another device and can be lost if browser site data is cleared. Export a JSON backup before major edits, browser cleanup, or moving to another computer.
+
+## 💎 Поддержать проект
+Если Конструктор Саркофагов сэкономил вам время, вы можете поддержать его развитие:
+- **СБП / Т-Банк:** [Ваша ссылка или номер]
+- **Криптовалюта:** USDT (EVM/TRC-20), BTC, SOL (адреса доступны в интерфейсе приложения)
+
+*Добровольное пожертвование. Услуги не оказываются.*

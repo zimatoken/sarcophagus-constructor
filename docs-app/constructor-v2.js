@@ -1285,6 +1285,75 @@ document.getElementById('wizard').addEventListener('click', (e) => {
 });
 
 // ============================================
+// БЛОК ПОДДЕРЖКИ (SOS v5.0 Pattern)
+// ============================================
+function copyToClipboard(text, successMsg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg))
+        .catch(() => fallbackCopy(text, successMsg));
+    } else {
+        fallbackCopy(text, successMsg);
+    }
+}
+
+function fallbackCopy(text, msg) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { 
+        document.execCommand('copy'); 
+        showToast(msg); 
+    } catch (e) { 
+        showToast('Реквизиты: ' + text); 
+    }
+    document.body.removeChild(ta);
+}
+
+function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.textContent = msg;
+    toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#10b981; color:#fff; padding:14px 28px; border-radius:10px; font-size:14px; font-weight:600; z-index:10001; box-shadow:0 8px 24px rgba(0,0,0,0.4); pointer-events:none;';
+    document.body.appendChild(toast);
+    setTimeout(() => { 
+        toast.style.opacity = '0'; 
+        toast.style.transition = 'opacity 0.4s'; 
+        setTimeout(() => toast.remove(), 400); 
+    }, 2500);
+}
+
+function copySBP() { 
+    // ⚠️ ПОЗЖЕ ЗАМЕНИ НА СВОЙ РЕАЛЬНЫЙ НОМЕР
+    const sbpPhone = '+79639424331'; 
+    copyToClipboard(sbpPhone, '📋 Номер СБП скопирован. Откройте банк → СБП → перевод'); 
+}
+
+function copyCrypto(type) {
+    // ⚠️ ПОЗЖЕ ЗАМЕНИ НА СВОИ РЕАЛЬНЫЕ АДРЕСА ИЗ КОШЕЛЬКА
+    const addresses = {
+        evm: '0x0000000000000000000000000000000000000000',      // Ethereum / BNB / Polygon
+        tron: 'T0000000000000000000000000000000000',       // Tron (TRC-20)
+        bitcoin: 'bc1q000000000000000000000000000000000000', // Bitcoin
+        solana: '11111111111111111111111111111111'          // Solana
+    };
+    
+    const address = addresses[type];
+    // Страховка: если адрес всё ещё тестовый, не даём его копировать
+    if (!address || address.includes('0000') || address.includes('1111')) {
+        showToast('⚠️ Реквизиты ещё настраиваются. Загляните позже!');
+        return;
+    }
+    
+    copyToClipboard(address, `📋 Адрес ${type.toUpperCase()} скопирован`);
+}
+
+function trackSupport(method) { 
+    console.log('[Support] Клик по методу:', method); 
+}
+
+// ============================================
 // ИНИЦИАЛИЗАЦИЯ
 // ============================================
 

@@ -77,6 +77,68 @@
         </section>
     </div>
 
+    <!-- ===== БЛОК ПОДДЕРЖКИ (SOS v5.0 Pattern) ===== -->
+    <section class="support-section">
+        <h3 style="text-align: center; color: #f1f5f9; margin-bottom: 8px;">💎 Поддержать развитие Конструктора</h3>
+        <p style="text-align: center; color: #94a3b8; margin-bottom: 24px; font-size: 14px;">
+            Если инструмент помог сэкономить время — скажи спасибо. Это вдохновляет делать его лучше и быстрее.
+        </p>
+        
+        <div class="support-methods">
+            <button class="support-btn sbp" onclick="copySBP()">
+                <span class="btn-icon">🏦</span>
+                <span class="btn-text">
+                    <span class="btn-label">Перевод по СБП</span>
+                    <span class="btn-hint">Работает в любом банке РФ</span>
+                </span>
+            </button>
+            
+            <a href="https://www.tinkoff.ru/rm/YOUR_TINKOFF_LINK" target="_blank" rel="noopener noreferrer nofollow" class="support-btn tinkoff" onclick="trackSupport('tinkoff')">
+                <span class="btn-icon">💳</span>
+                <span class="btn-text">
+                    <span class="btn-label">Т-Банк (Тинькофф)</span>
+                    <span class="btn-hint">Для клиентов Т-Банка</span>
+                </span>
+            </a>
+            
+            <button class="support-btn evm" onclick="copyCrypto('evm')">
+                <span class="btn-icon">🔗</span>
+                <span class="btn-text">
+                    <span class="btn-label">USDT / ETH (EVM)</span>
+                    <span class="btn-hint">Ethereum, Base, Polygon, BNB</span>
+                </span>
+            </button>
+            
+            <button class="support-btn tron" onclick="copyCrypto('tron')">
+                <span class="btn-icon">⚡</span>
+                <span class="btn-text">
+                    <span class="btn-label">USDT TRC-20</span>
+                    <span class="btn-hint">Tron Network</span>
+                </span>
+            </button>
+            
+            <button class="support-btn bitcoin" onclick="copyCrypto('bitcoin')">
+                <span class="btn-icon">₿</span>
+                <span class="btn-text">
+                    <span class="btn-label">Bitcoin</span>
+                    <span class="btn-hint">BTC Network</span>
+                </span>
+            </button>
+            
+            <button class="support-btn solana" onclick="copyCrypto('solana')">
+                <span class="btn-icon">◎</span>
+                <span class="btn-text">
+                    <span class="btn-label">Solana</span>
+                    <span class="btn-hint">SOL / USDC</span>
+                </span>
+            </button>
+        </div>
+        
+        <div class="support-legal">
+            💎 Добровольное пожертвование на развитие open-source проекта. Услуги не оказываются, товар не поставляется. По вопросам: your.email@example.com
+        </div>
+    </section>
+
     <script src="library-v2.js"></script>
     <script src="constructor-v2.js"></script>
 </body>
